@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+    <h1>TODO list
+        <a href="{% url 'todo_list:task-create' %}" class="btn btn-primary link-to-page">
+          Add task
+        </a>
+    </h1>
+    <table class="table">
+        {% for task in task_list %}
+            {% if task.ready %}
+                <tr>
+                    <th>{{ task.content }} <a style="color:Green">Done</a></th>
+                    <td>
+                        Created: {{ task.datetime }} Deadline: {{ task.deadline }}
+                    </td>
+                    <td>
+                        Tags: {{ task.tags.name }} <a href="{% url 'todo_list:task-update' pk=task.id %}">Update</a> <a href="{% url 'todo_list:task-delete' pk=task.id %}">Delete</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'todo_list:done-task' pk=task.id %}" class="btn btn-danger">undo</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <th>{{ task.content }} <a style="color:red">Not done</a></th>
+                    <td>
+                        Created: {{ task.datetime }} Deadline: {{ task.deadline }}
+                    </td>
+                    <td>
+                        Tags: {{ task.tags.name }} <a href="{% url 'todo_list:task-update' pk=task.id %}">Update</a> <a href="{% url 'todo_list:task-delete' pk=task.id %}">Delete</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'todo_list:done-task' pk=task.id %}" class="btn btn-success link-to-page">Done</a>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+{% endblock %}
