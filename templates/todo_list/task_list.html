@@ -16,7 +16,9 @@
                         Created: {{ task.datetime }} Deadline: {{ task.deadline }}
                     </td>
                     <td>
-                        Tags: {{ task.tags.name }} <a href="{% url 'todo_list:task-update' pk=task.id %}">Update</a> <a href="{% url 'todo_list:task-delete' pk=task.id %}">Delete</a>
+                        Tags:{% for tag in task.tags.all %}
+                             {{ tag.name }}{% endfor %} <a href="{% url 'todo_list:task-update' pk=task.id %}">Update</a> <a href="{% url 'todo_list:task-delete' pk=task.id %}">Delete</a>
+
                     </td>
                     <td>
                         <a href="{% url 'todo_list:done-task' pk=task.id %}" class="btn btn-danger">undo</a>
@@ -29,7 +31,9 @@
                         Created: {{ task.datetime }} Deadline: {{ task.deadline }}
                     </td>
                     <td>
-                        Tags: {{ task.tags.name }} <a href="{% url 'todo_list:task-update' pk=task.id %}">Update</a> <a href="{% url 'todo_list:task-delete' pk=task.id %}">Delete</a>
+                        Tags:{% for tag in task.tags.all %}
+                             {{ tag.name }}{% endfor %} <a href="{% url 'todo_list:task-update' pk=task.id %}">Update</a> <a href="{% url 'todo_list:task-delete' pk=task.id %}">Delete</a>
+
                     </td>
                     <td>
                         <a href="{% url 'todo_list:done-task' pk=task.id %}" class="btn btn-success link-to-page">Done</a>

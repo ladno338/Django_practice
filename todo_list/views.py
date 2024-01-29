@@ -4,7 +4,7 @@ from django.views import generic
 
 from django.shortcuts import render
 
-from Todo_List.models import Tag, Task
+from todo_list.models import Tag, Task
 
 
 class TagsListView(generic.ListView):
@@ -66,9 +66,10 @@ class TaskDeleteView(generic.DeleteView):
     success_url = reverse_lazy("todo_list:index")
 
 
-def done_task(request, pk):
-    if Task.objects.get(id=pk).ready:
-        Task.objects.filter(id=pk).update(ready=False)
-    else:
-        Task.objects.filter(id=pk).update(ready=True)
-    return HttpResponseRedirect(reverse_lazy("todo_list:index"))
+class DoneTask:
+    def post(request, pk):
+        if Task.objects.get(id=pk).ready:
+            Task.objects.filter(id=pk).update(ready=False)
+        else:
+            Task.objects.filter(id=pk).update(ready=True)
+        return HttpResponseRedirect(reverse_lazy("todo_list:index"))
