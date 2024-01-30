@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views import generic
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from todo_list.models import Tag, Task
 
@@ -68,8 +68,9 @@ class TaskDeleteView(generic.DeleteView):
 
 class DoneTask:
     def post(request, pk):
-        if Task.objects.get(id=pk).ready:
-            Task.objects.filter(id=pk).update(ready=False)
+        task = get_object_or_404(Task, pk=pk).ready
+        if task:
+            Task.objects.filter(pk=pk).update(ready=False)
         else:
-            Task.objects.filter(id=pk).update(ready=True)
+            Task.objects.filter(pk=pk).update(ready=True)
         return HttpResponseRedirect(reverse_lazy("todo_list:index"))
